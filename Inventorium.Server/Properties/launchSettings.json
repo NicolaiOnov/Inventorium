@@ -9,15 +9,27 @@
     }
   },
   "profiles": {
-    "Inventorium.Server": {
+    "Development": {
       "commandName": "Project",
       "dotnetRunMessages": true,
+      "commandLineArgs": "false",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7279;http://localhost:5279",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "Development with DB reboot": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "commandLineArgs": "true",
+      "launchBrowser": true,
+      "launchUrl": "",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
     },
     "IIS Express": {
       "commandName": "IISExpress",
