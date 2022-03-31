@@ -15,16 +15,13 @@ namespace Inventorium.Server.Services.DbInitializer
 
         public void Initialize(bool recreateDb)
         {
-            if (recreateDb)
-            {
-                _dbContext.Database.EnsureDeleted();
-                _dbContext.Database.EnsureCreated();
-            }
+            if (!recreateDb)
+                return;
 
-            //if (_dbContext.AppUsers.Any())
-            //    return;   // DB has been seeded
+            _dbContext.Database.EnsureDeleted();
+            _dbContext.Database.EnsureCreated();
 
-            GenerateProducts().ToList()
+            GenerateProducts().ToList() 
                 .ForEach(i => _dbContext.Products.Add(i));
             _dbContext.SaveChanges();
 

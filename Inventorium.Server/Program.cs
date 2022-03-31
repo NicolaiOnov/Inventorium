@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+
 // Application-specific services
 builder.Services.AddDbContext<InventoriumDbContext>(options =>
     options.UseSqlServer("Server=LAPTOP-7EB7I4FT\\SQLEXPRESS;Database=InventoriumDb;Trusted_Connection=True;"));

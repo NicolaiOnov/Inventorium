@@ -26,7 +26,7 @@ namespace Inventorium.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocations()
         {
-            return await _context.Locations.ToListAsync();
+            return await _context.Locations.Include(location => location.LocalVariationQuantities).ToListAsync();
         }
 
         // GET: api/Locations/5
