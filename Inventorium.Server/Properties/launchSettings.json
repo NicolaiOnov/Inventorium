@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -11,25 +11,23 @@
   "profiles": {
     "Development": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "commandLineArgs": "false",
-      "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5000",
+      "dotnetRunMessages": true
     },
     "Development with DB reboot": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "commandLineArgs": "true",
       "launchBrowser": true,
-      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5000",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

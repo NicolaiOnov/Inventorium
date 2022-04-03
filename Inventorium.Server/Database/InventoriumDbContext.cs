@@ -1,5 +1,4 @@
 ﻿using Inventorium.Server.Model;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inventorium.Server.Database
