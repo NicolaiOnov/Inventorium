@@ -43,7 +43,7 @@ namespace Inventorium.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLocation(int id, Location location)
         {
-            if (id != location.LocationId)
+            if (id != location.Id)
             {
                 return BadRequest();
             }
@@ -77,7 +77,7 @@ namespace Inventorium.Server.Controllers
             _context.Locations.Add(location);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLocation", new { id = location.LocationId }, location);
+            return CreatedAtAction("GetLocation", new { id = location.Id }, location);
         }
 
         // DELETE: api/Locations/5
@@ -98,7 +98,7 @@ namespace Inventorium.Server.Controllers
 
         private bool LocationExists(int id)
         {
-            return _context.Locations.Any(e => e.LocationId == id);
+            return _context.Locations.Any(e => e.Id == id);
         }
     }
 }

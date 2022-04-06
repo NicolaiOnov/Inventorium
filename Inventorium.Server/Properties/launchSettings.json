@@ -23,6 +23,7 @@
       "commandName": "Project",
       "commandLineArgs": "true",
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

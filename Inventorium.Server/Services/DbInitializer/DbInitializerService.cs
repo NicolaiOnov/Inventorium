@@ -25,6 +25,9 @@ namespace Inventorium.Server.Services.DbInitializer
                 .ForEach(i => _dbContext.Products.Add(i));
             _dbContext.SaveChanges();
 
+            _dbContext.AddRange(GenerateVariations());
+            _dbContext.SaveChanges();
+
             GenerateLocations().ToList()
                 .ForEach(i => _dbContext.Locations.Add(i));
             _dbContext.SaveChanges();
@@ -40,35 +43,35 @@ namespace Inventorium.Server.Services.DbInitializer
             {
                 new Product { 
                     Name = "Alize Puffy Fine", 
-                    Price = 66,
-                    Variations = new List<Variation>
-                    {
-                        new() { Name = "62 - black", Price = 0, isDefault = false, Sku = 41204127099},
-                        new() { Name = "02 - white", Price = 0, isDefault = false, Sku = 41204127063},
-                        new() { Name = "541 - denim blue", Price = 0, isDefault = false, Sku = 41204127058}
-                    }},
+                    Price = 66
+                },
                 new Product
                 {
                     Name = "YarnArt Chanelle",
-                    Price = 52,
-                    Variations = new List<Variation>
-                    {
-                        new() { Name = "771 - fuxia", Price = 0, isDefault = false, Sku = 36104127001},
-                        new() { Name = "02 - white", Price = 0, isDefault = false, Sku = 36104127065},
-                    }
+                    Price = 52
                 },
                 new Product { 
                     Name = "Tea Cup",
-                    Price = 15,
-                    Variations = new List<Variation>
-                    {
-                        new() { Name = "red", Price = 0, isDefault = false, Sku = 12104127006},
-                        new() { Name = "black", Price = 0, isDefault = false, Sku = 12104127071},
-                    }
+                    Price = 15
                 }
             };
         }
 
+        private IEnumerable<Variation> GenerateVariations()
+        {
+            return new List<Variation>
+            {
+                new() { Name = "62 - black", ProductId = 1, Price = 0, isDefault = false, Sku = 41204127099},
+                new() { Name = "02 - white", ProductId = 1, Price = 0, isDefault = false, Sku = 41204127063},
+                new() { Name = "541 - denim blue", ProductId = 1, Price = 0, isDefault = false, Sku = 41204127058},
+
+                new() { Name = "771 - fuxia", ProductId = 2, Price = 0, isDefault = false, Sku = 36104127001},
+                new() { Name = "02 - white", ProductId = 2, Price = 0, isDefault = false, Sku = 36104127065},
+
+                new() { Name = "red", ProductId = 3, Price = 0, isDefault = false, Sku = 12104127006},
+                new() { Name = "black", ProductId = 3, Price = 0, isDefault = false, Sku = 12104127071},
+            };
+        }
 
         private IEnumerable<Location> GenerateLocations()
         {

@@ -32,31 +32,31 @@ namespace Inventorium.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocalVariationQuantityId"), 1L, 1);
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("VariationId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("LocalVariationQuantityId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("Id");
 
-                    b.HasIndex("VariationId");
+                    b.HasIndex("Id");
 
                     b.ToTable("LocalVariationQuantities");
                 });
 
             modelBuilder.Entity("Inventorium.Server.Model.Location", b =>
                 {
-                    b.Property<int>("LocationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -66,35 +66,35 @@ namespace Inventorium.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("LocationId");
+                    b.HasKey("Id");
 
                     b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Inventorium.Server.Model.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Inventorium.Server.Model.Variation", b =>
                 {
-                    b.Property<int>("VariationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VariationId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -103,7 +103,7 @@ namespace Inventorium.Server.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int?>("Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Sku")
@@ -112,9 +112,9 @@ namespace Inventorium.Server.Migrations
                     b.Property<bool>("isDefault")
                         .HasColumnType("bit");
 
-                    b.HasKey("VariationId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Variations");
                 });
@@ -123,13 +123,13 @@ namespace Inventorium.Server.Migrations
                 {
                     b.HasOne("Inventorium.Server.Model.Location", "Location")
                         .WithMany("LocalVariationQuantities")
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Inventorium.Server.Model.Variation", "Variation")
                         .WithMany("LocalVariationQuantities")
-                        .HasForeignKey("VariationId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -142,7 +142,7 @@ namespace Inventorium.Server.Migrations
                 {
                     b.HasOne("Inventorium.Server.Model.Product", null)
                         .WithMany("Variations")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("Id");
                 });
 
             modelBuilder.Entity("Inventorium.Server.Model.Location", b =>

@@ -24,6 +24,20 @@ namespace Inventorium.Server.Controllers
             return await _context.Variations.ToListAsync();
         }
 
+        // GET: api/Variations/product/5
+        [HttpGet("product/{id}")]
+        public async Task<ActionResult<IEnumerable<Variation>>> GetVariationForProduct(int id)
+        {
+            var variations = await _context.Variations.Where(v => v.ProductId == id).Include(l => l.LocalVariationQuantities).ToListAsync();
+
+            if (variations.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return variations;
+        }
+
         // GET: api/Variations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Variation>> GetVariation(int id)
@@ -43,7 +57,7 @@ namespace Inventorium.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVariation(int id, Variation variation)
         {
-            if (id != variation.VariationId)
+            if (id != variation.Id)
             {
                 return BadRequest();
             }
@@ -77,7 +91,7 @@ namespace Inventorium.Server.Controllers
             _context.Variations.Add(variation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVariation", new { id = variation.VariationId }, variation);
+            return CreatedAtAction("GetVariation", new { id = variation.Id }, variation);
         }
 
         // DELETE: api/Variations/5
@@ -98,7 +112,7 @@ namespace Inventorium.Server.Controllers
 
         private bool VariationExists(int id)
         {
-            return _context.Variations.Any(e => e.VariationId == id);
+            return _context.Variations.Any(e => e.Id == id);
         }
     }
 }

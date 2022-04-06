@@ -21,7 +21,24 @@ namespace Inventorium.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(p => p.Variations).ToListAsync();
+        }
+
+        // GET: api/Products/location/5
+        [HttpGet("location/{id}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsForLocation(int id)
+        {
+            var products = await _context.Products.Where(p =>
+                    p.Variations.Any(v => v.LocalVariationQuantities.Any(lvq => lvq.LocationId == id)))
+                .Include(p => p.Variations)
+                .ToListAsync();
+
+            if (products.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return products;
         }
 
         // GET: api/Products/5
@@ -43,7 +60,7 @@ namespace Inventorium.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            if (id != product.ProductId)
+            if (id != product.Id)
             {
                 return BadRequest();
             }
@@ -77,7 +94,7 @@ namespace Inventorium.Server.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
         // DELETE: api/Products/5
@@ -98,7 +115,7 @@ namespace Inventorium.Server.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

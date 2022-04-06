@@ -26,11 +26,15 @@ namespace Inventorium.Server.Controllers
 
         // GET: api/LocalVariationQuantities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<LocalVariationQuantity>> GetLocalVariationQuantity(int id)
+        public async Task<ActionResult<IEnumerable<LocalVariationQuantity>>> GetLocalVariationQuantity(int id)
         {
-            var localVariationQuantity = await _context.LocalVariationQuantities.FindAsync(id);
+            var localVariationQuantity = await _context.LocalVariationQuantities
+                .Where(lvq => lvq.VariationId == id)
+                .Include(lvq => lvq.Location)
+                .Include(lvq => lvq.Variation)
+                .ToListAsync();
 
-            if (localVariationQuantity == null)
+            if (localVariationQuantity.Count == 0)
             {
                 return NotFound();
             }
@@ -38,12 +42,27 @@ namespace Inventorium.Server.Controllers
             return localVariationQuantity;
         }
 
+
+        //// GET: api/LocalVariationQuantities/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<LocalVariationQuantity>> GetLocalVariationQuantity(int id)
+        //{
+        //    var localVariationQuantity = await _context.LocalVariationQuantities.FindAsync(id);
+
+        //    if (localVariationQuantity == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return localVariationQuantity;
+        //}
+
         // PUT: api/LocalVariationQuantities/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLocalVariationQuantity(int id, LocalVariationQuantity localVariationQuantity)
         {
-            if (id != localVariationQuantity.LocalVariationQuantityId)
+            if (id != localVariationQuantity.Id)
             {
                 return BadRequest();
             }
@@ -77,7 +96,7 @@ namespace Inventorium.Server.Controllers
             _context.LocalVariationQuantities.Add(localVariationQuantity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLocalVariationQuantity", new { id = localVariationQuantity.LocalVariationQuantityId }, localVariationQuantity);
+            return CreatedAtAction("GetLocalVariationQuantity", new { id = localVariationQuantity.Id }, localVariationQuantity);
         }
 
         // DELETE: api/LocalVariationQuantities/5
@@ -98,7 +117,7 @@ namespace Inventorium.Server.Controllers
 
         private bool LocalVariationQuantityExists(int id)
         {
-            return _context.LocalVariationQuantities.Any(e => e.LocalVariationQuantityId == id);
+            return _context.LocalVariationQuantities.Any(e => e.Id == id);
         }
     }
 }

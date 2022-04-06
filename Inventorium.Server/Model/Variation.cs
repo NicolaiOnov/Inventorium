@@ -2,7 +2,9 @@
 {
     public class Variation
     {
-        public int VariationId { get; set; }
+        public int Id { get; set; }
+
+        public int ProductId { get; set; }
 
         public string Name { get; set; }
         public decimal Price { get; set; }
